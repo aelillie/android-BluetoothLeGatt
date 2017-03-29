@@ -140,7 +140,7 @@ public class BluetoothLeService extends Service {
                 format = BluetoothGattCharacteristic.FORMAT_UINT8;
                 Log.d(TAG, "Apparent wind direction format UINT8.");
             }
-            final int windDir = characteristic.getIntValue(format, 1);
+            final int windDir = characteristic.getIntValue(format, 0);
             Log.d(TAG, String.format("Received Battery level: %d", windDir));
             intent.putExtra(EXTRA_DATA, String.valueOf(windDir));
         } else {
