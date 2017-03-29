@@ -65,6 +65,10 @@ public class BluetoothLeService extends Service {
 
     public final static UUID UUID_HEART_RATE_MEASUREMENT =
             UUID.fromString(SampleGattAttributes.HEART_RATE_MEASUREMENT);
+    public final static UUID UUID_BATTERY_LEVEL =
+            UUID.fromString(SampleGattAttributes.BATTERY_LEVEL);
+    public final static UUID UUID_APPARENT_WIND_DIRECTION =
+            UUID.fromString(SampleGattAttributes.APPARENT_WINT_DIRECTION);
 
     // Implements callback methods for GATT events that the app cares about.  For example,
     // connection change and services discovered.
@@ -126,19 +130,19 @@ public class BluetoothLeService extends Service {
         // This is special handling for the Heart Rate Measurement profile.  Data parsing is
         // carried out as per profile specifications:
         // http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml
-        if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
+        if (UUID_APPARENT_WIND_DIRECTION.equals(characteristic.getUuid())) {
             int flag = characteristic.getProperties();
             int format = -1;
-            if ((flag & 0x01) != 0) {
+            if (flag == 18) {
                 format = BluetoothGattCharacteristic.FORMAT_UINT16;
-                Log.d(TAG, "Heart rate format UINT16.");
+                Log.d(TAG, "Apparent wind direction format UINT16.");
             } else {
                 format = BluetoothGattCharacteristic.FORMAT_UINT8;
-                Log.d(TAG, "Heart rate format UINT8.");
+                Log.d(TAG, "Apparent wind direction format UINT8.");
             }
-            final int heartRate = characteristic.getIntValue(format, 1);
-            Log.d(TAG, String.format("Received heart rate: %d", heartRate));
-            intent.putExtra(EXTRA_DATA, String.valueOf(heartRate));
+            final int windDir = characteristic.getIntValue(format, 1);
+            Log.d(TAG, String.format("Received Battery level: %d", windDir));
+            intent.putExtra(EXTRA_DATA, String.valueOf(windDir));
         } else {
             // For all other profiles, writes the data formatted in HEX.
             final byte[] data = characteristic.getValue();
