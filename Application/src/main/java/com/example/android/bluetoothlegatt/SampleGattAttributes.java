@@ -22,7 +22,7 @@ import java.util.HashMap;
  * This class includes a small subset of standard GATT attributes for demonstration purposes.
  */
 public class SampleGattAttributes {
-    private static final String baseBluetoothUuidPostfix = "0000-1000-8000-00805F9B34FB";
+    private static final String baseBluetoothUuidPostfix = "0000-1000-8000-00805f9b34fb";
     private static HashMap<String, String> attributes = new HashMap();
     public static String HEART_RATE_MEASUREMENT = "00002a37-0000-1000-8000-00805f9b34fb";
     static String BATTERY_LEVEL = uuidSStringFromUInt16("2a19");
